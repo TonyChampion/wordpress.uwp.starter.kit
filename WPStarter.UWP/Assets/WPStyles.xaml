@@ -1,0 +1,24 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WPStarter.UWP.Assets">
+
+    <Style x:Key="SectionTitle" BasedOn="{StaticResource SubtitleTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#6b3a94"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+    </Style>
+
+    <Style x:Key="BlogTitle" BasedOn="{StaticResource SubheaderTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#870000"/>
+    </Style>
+
+    <Style x:Key="BlogTagline" BasedOn="{StaticResource TitleTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#870000"/>
+    </Style>
+
+    <Style x:Key="CategoryCount" BasedOn="{StaticResource BodyTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Gray"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+    </Style>
+
+</ResourceDictionary>

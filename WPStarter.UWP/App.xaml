@@ -1,0 +1,19 @@
+﻿<Application
+    x:Class="WPStarter.UWP.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WPStarter.UWP"
+    RequestedTheme="Light">
+    <Application.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="blogUri2">[BLOG URL - ex. http://tonychampion.net/blog]</x:String>
+            <x:String x:Key="blogUser2">[USERNAME]</x:String>
+            <x:String x:Key="blogPwd2">[PASSWORD]</x:String>
+            <x:Int32 x:Key="blogId">1</x:Int32>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/WPStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

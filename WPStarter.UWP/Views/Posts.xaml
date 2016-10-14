@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="WPStarter.UWP.Views.Posts"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WPStarter.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="White">
+        <Grid x:Name="grdPosts" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="txtTtiel" Text="{x:Bind ViewModel.Title}" Style="{StaticResource SectionTitle}"/>
+
+            <ListView x:Name="lvPosts" 
+                        Grid.Row="1" Margin="0 10 0 10"
+                        ItemsSource="{x:Bind ViewModel.Posts, Mode=OneWay}"
+                    SelectionChanged="lvPosts_SelectionChanged">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding Title}"/>
+                            <TextBlock Text="{Binding PostModified}"/>
+                            <TextBlock Text="{Binding Excerpt}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>
