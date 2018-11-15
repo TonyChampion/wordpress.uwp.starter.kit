@@ -1,0 +1,59 @@
+﻿<UserControl
+    x:Class="WPStarter.UWP.Controls.CategoryTile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WPStarter.UWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:WPStarter.UWP.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    PointerEntered="UserControl_PointerEntered"
+    PointerExited="UserControl_PointerExited">
+    <UserControl.Resources>
+        <conv:StringFormatConverter x:Key="convString"/>
+        <conv:EnumDisplayConverter x:Key="convEnum"/>
+        <conv:CategoryOpacityConverter x:Key="convOpacity"/>
+    </UserControl.Resources>
+    <Border CornerRadius="0" Width="200" Height="120">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Backgrounds">
+
+                <VisualStateGroup.Transitions>
+                    <VisualTransition To="PointerOver" 
+                                              GeneratedDuration="0:0:0.3"/>
+                </VisualStateGroup.Transitions>
+
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver">
+                    <Storyboard>
+                        <ColorAnimation Storyboard.TargetName="brdBackground" 
+                                                Storyboard.TargetProperty="Color" To="Red" />
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Border.Background>
+            <SolidColorBrush x:Name="brdBackground" Color="#6b3a94"
+                               Opacity="{Binding Converter={StaticResource convOpacity}}"/>
+        </Border.Background>
+        <Grid Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding Name}" Style="{StaticResource CategoryTitle}" TextWrapping="WrapWholeWords"/>
+            <Border Width="30" Height="25" CornerRadius="12"
+                                Background="White"
+                                Grid.Row="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom">
+                <TextBlock Style="{StaticResource CategoryCount}" 
+                                    Text="{Binding Count}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

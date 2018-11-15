@@ -45,5 +45,6 @@ namespace WPStarter.UWP.Utilities
                 Frame.Navigate(destination, param);
             }
         }
+
     }
 }

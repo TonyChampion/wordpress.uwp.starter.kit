@@ -36,7 +36,10 @@ namespace WPStarter.UWP.ViewModels
              //   options.BlogUrl.Value + "/wp-content/themes/" + options.Stylesheet.Value + "/style.css";
                 ret = $@"<html>
                               <body>
-                                <link rel='stylesheet' type='text/css' href='{cssUrl}'/>                                {_post.Content}                              </body>                            </html>";
+                                <link rel='stylesheet' type='text/css' href='{cssUrl}'/>
+                                {_post.Content}
+                              </body>
+                            </html>";
             }
 
             HtmlContent = ret;

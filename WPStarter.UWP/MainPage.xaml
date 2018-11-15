@@ -8,111 +8,71 @@
     mc:Ignorable="d">
 
     <Grid Background="White">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1024"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="svMain.DisplayMode" Value="Inline"/>
-                        <Setter Target="svMain.IsPaneOpen" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="svMain.DisplayMode" Value="CompactOverlay"/>
-                        <Setter Target="imgLogo.Visibility" Value="Collapsed"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="svMain.DisplayMode" Value="Overlay"/>
-                        <Setter Target="svMain.IsPaneOpen" Value="False"/>
-                        <Setter Target="imgLogo.Visibility" Value="Collapsed"/>
-                        <Setter Target="smallHeader.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <SplitView x:Name="svMain"
-                   CompactPaneLength="40"
-                   OpenPaneLength="150" 
-                   DisplayMode="CompactOverlay">
-            <SplitView.Pane>
-                <Grid x:Name="grPane"
-                      VerticalAlignment="Stretch"
-                      HorizontalAlignment="Stretch"
-                      Background="#2776bb">
-                    <ListView x:Name="lvNav"
-                              ItemsSource="{Binding Menu}"
-                              SelectionChanged="lvNav_SelectionChanged"
-                              Margin="0 48 0 0"
-                              VerticalAlignment="Top">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <FontIcon x:Name="Glyph"
-                                              Glyph="{Binding Glyph}"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"
-                                              Foreground="White"
-                                              ToolTipService.ToolTip="{Binding Text}" />
-                                    <TextBlock Text="{Binding Text}"
-                                               Margin="8 0 0 0"
-                                               Foreground="White" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <Image x:Name="imgLogo" VerticalAlignment="Bottom" 
-                           HorizontalAlignment="Center"
-                           Source="Assets/Square150x150Logo.png"
-                           Width="150" Height="150"/>
-               </Grid>
-            </SplitView.Pane>
-            <SplitView.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid x:Name="smallHeader" Visibility="Collapsed" Height="40" HorizontalAlignment="Stretch" Background="#2776bb">
-                        <TextBlock Text=""/>
-                    </Grid>
-                    <!-- Navigation Frame -->
-                    <Frame x:Name="frContent" Grid.Row="1">
-                        <Frame.ContentTransitions>
-                            <TransitionCollection>
-                                <NavigationThemeTransition>
-                                    <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                        <EntranceNavigationTransitionInfo />
-                                    </NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                </NavigationThemeTransition>
-                            </TransitionCollection>
-                        </Frame.ContentTransitions>
-                    </Frame>
+        <Grid.Resources>
+            <AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
+                  BackgroundSource="HostBackdrop"
+                  TintColor="#2776bb"
+                  TintOpacity="0.5"
+                  FallbackColor="#2776bb"/>
+            <AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
+                  BackgroundSource="HostBackdrop"
+                  TintColor="#2776bb"
+                  TintOpacity="0.5"
+                  FallbackColor="#2776bb"/>            
+        </Grid.Resources>
+        <NavigationView x:Name="navView" ItemInvoked="NavigationView_ItemInvoked"
+                        IsSettingsVisible="False" RequestedTheme="Dark"
+                        AlwaysShowHeader="False" OpenPaneLength="200">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Home">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE80F;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Posts">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7C3;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Categories">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8F1;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <Grid RequestedTheme="Light">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="header" Grid.ColumnSpan="2" Margin="16 16 0 8">
+                    <TextBlock Text="{x:Bind ViewModel.Options.BlogTitle.Value, Mode=OneWay}" Style="{StaticResource BlogTitle}"/>
+                    <TextBlock Text="{x:Bind ViewModel.Options.BlogTagline.Value, Mode=OneWay}" Style="{StaticResource BlogTagline}"/>
+                </StackPanel>
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid.Background>
+                        <ImageBrush Opacity=".1"  Stretch="Uniform" ImageSource="/Assets/wordpress-bg.png">
+                            <ImageBrush.Transform>
+                                <ScaleTransform ScaleX="2.0" ScaleY="2.0"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Grid.Background>
                 </Grid>
-            </SplitView.Content>
-        </SplitView>
+                <!-- Navigation Frame -->
+                <Frame x:Name="ContentFrame" Margin="24 8 0 0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                    <Frame.ContentTransitions>
+                        <TransitionCollection>
+                            <NavigationThemeTransition/>
+                        </TransitionCollection>
+                    </Frame.ContentTransitions>
+                </Frame>
+            </Grid>
+        </NavigationView>
         <ProgressRing x:Name="prMain" />
-        
-        <!-- Hamburger Button -->
-        <Button x:Name="HamburgerButton"
-                FontFamily="Segoe MDL2 Assets"
-                Content="&#xE700;"
-                Width="40"
-                Height="40"
-                Background="#2776bb"
-                Foreground="White"
-                VerticalAlignment="Top"
-                BorderThickness="0"
-                Click="HamburgerButton_Click" />
     </Grid>
 </Page>

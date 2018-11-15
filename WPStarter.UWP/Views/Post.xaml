@@ -14,8 +14,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="{x:Bind ViewModel.Post.Title, Mode=OneWay}" Style="{StaticResource SectionTitle}"/>
-            <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.Post.PostModified, Mode=OneWay}"/>
+            <TextBlock Text="{x:Bind ViewModel.Post.Title, Mode=OneWay}" Style="{StaticResource PostTitle}"/>
+            <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.Post.PostModified, Mode=OneWay}" Style="{StaticResource PostDate}"/>
             <WebView Grid.Row="2" x:Name="wvPost" NavigationStarting="wvPost_NavigationStarting" Margin="0 20 0 0" />
         </Grid>
     </Grid>

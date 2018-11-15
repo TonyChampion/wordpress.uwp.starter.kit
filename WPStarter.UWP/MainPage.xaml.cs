@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using WPStarter.UWP.Utilities;
 using WPStarter.UWP.ViewModels;
+using WPStarter.UWP.Views;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -24,30 +25,45 @@ namespace WPStarter.UWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private MainPageViewModel _viewModel;
+        public MainPageViewModel ViewModel { get; set; }
 
         public MainPage()
         {
             this.InitializeComponent();
-
-            _viewModel = new MainPageViewModel();
-            DataContext = _viewModel;
+            
 
             ProgressHelper.Ring = prMain;
+            NavigationHelper.Frame = ContentFrame;
+            ContentFrame.Navigated += ContentFrame_Navigated;
+            NavigationHelper.Navigate(typeof(Home));
+            navView.BackRequested += NavView_BackRequested;
 
-            NavigationHelper.Frame = frContent;
-
-            NavigationHelper.Navigate(_viewModel.Menu.First().NavigationDestination);
-
+            ViewModel = new MainPageViewModel();
         }
 
-        private void lvNav_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
-            NavigationHelper.Navigate((e.AddedItems[0] as MenuItem).NavigationDestination);
+            ContentFrame.GoBack();
         }
-        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            svMain.IsPaneOpen = !svMain.IsPaneOpen;
+            navView.IsBackEnabled = ContentFrame.CanGoBack;
+        }
+
+        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            switch (args.InvokedItem) {
+                case "Home":
+                    ContentFrame.Navigate(typeof(Home));
+                    break;
+                case "Posts":
+                    ContentFrame.Navigate(typeof(Posts));
+                    break;
+                case "Categories":
+                    ContentFrame.Navigate(typeof(Categories));
+                    break;
+            }
 
         }
     }

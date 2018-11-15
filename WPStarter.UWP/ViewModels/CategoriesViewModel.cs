@@ -17,7 +17,7 @@ namespace WPStarter.UWP.ViewModels
 {
     public class CategoriesViewModel : ViewModelBase
     {
-        private IEnumerable<WordPressTerm> _categories;
+        private IEnumerable<Category> _categories;
         private CategorySort _currentSort;
 
         public CategoriesViewModel()
@@ -29,7 +29,16 @@ namespace WPStarter.UWP.ViewModels
         {
             ProgressHelper.EnableRing = true;
 
-            Categories = await WordPressHelper.Client.GetTermsAsync("category", new WordPressTermFilter() { Order = WordPressOrder.desc, OrderBy = WordPressTermOrderBy.count, Size = 1000 });
+            var cats = await WordPressHelper.Client.GetTermsAsync("category", new WordPressTermFilter() { Order = WordPressOrder.desc, OrderBy = WordPressTermOrderBy.count, Size = 1000 });
+            if(cats != null)
+            {
+                var maxCount = cats.OrderByDescending(c => c.Count).First().Count;
+                Categories = cats.Select(c => Category.FromWordPressTerm(c, maxCount));
+            } else
+            {
+                Categories = null;
+            }
+
             InitSort();
 
             ProgressHelper.EnableRing = false;
@@ -45,7 +54,7 @@ namespace WPStarter.UWP.ViewModels
                 CurrentSort = (CategorySort)Enum.Parse(typeof(CategorySort), fieldInfo.Name);
             }
         }
-        public IEnumerable<WordPressTerm> Categories
+        public IEnumerable<Category> Categories
         {
             get { return _categories; }
             private set {
@@ -74,7 +83,7 @@ namespace WPStarter.UWP.ViewModels
                 return ret;
             }
         }
-        public IEnumerable<WordPressTerm> SortedCategories
+        public IEnumerable<Category> SortedCategories
         {
             get {
                 return _currentSort == CategorySort.count ? _categories :
@@ -89,5 +98,8 @@ namespace WPStarter.UWP.ViewModels
             //_isCountSort = (string)itm.Content == "Count";
             RaisePropertyChanged("SortedCategories");
         }
+
+        private int _maxCount;
+
     }
 }

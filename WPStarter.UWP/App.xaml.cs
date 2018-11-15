@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
@@ -36,11 +37,6 @@ namespace WPStarter.UWP
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-        }
-
-        private void CurNavMgr_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            NavigationHelper.GoBack();
         }
 
         /// <summary>
@@ -79,13 +75,12 @@ namespace WPStarter.UWP
                 // parameter
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
+
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+
             // Ensure the current window is active
             Window.Current.Activate();
-
-            var curNavMgr = SystemNavigationManager.GetForCurrentView();
-
-            curNavMgr.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            curNavMgr.BackRequested += CurNavMgr_BackRequested;
 
         }
 

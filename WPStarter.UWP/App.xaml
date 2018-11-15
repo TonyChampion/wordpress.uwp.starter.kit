@@ -6,9 +6,9 @@
     RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>
-            <x:String x:Key="blogUri">[BLOG URL - ex. http://tonychampion.net/blog]</x:String>
-            <x:String x:Key="blogUser">[USERNAME]</x:String>
-            <x:String x:Key="blogPwd">[PASSWORD]</x:String>
+            <x:String x:Key="blogUri">http://tonychampion.net/blog</x:String>
+            <x:String x:Key="blogUser">admin</x:String>
+            <x:String x:Key="blogPwd">v0rt3x98</x:String>
             <x:Int32 x:Key="blogId">1</x:Int32>
 
             <ResourceDictionary.MergedDictionaries>

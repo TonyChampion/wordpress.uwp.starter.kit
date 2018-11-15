@@ -42,7 +42,7 @@ namespace WPStarter.UWP.ViewModels
 
             var posts = await WordPressHelper.Client.GetPostsAsync(new WordPressPostFilter() { Order = WordPressOrder.desc, OrderBy = WordPressPostOrderBy.modified, Size = 1000 }, fields);
 
-            if(posts != null )
+            if(posts != null && _term != null)
             {
                 Posts = posts.Where(p => p.Terms.Count(t => (t.Taxonomy == "category" && t.Name == _term.Name)) > 0);
             } else

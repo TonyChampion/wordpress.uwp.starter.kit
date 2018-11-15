@@ -1,4 +1,5 @@
 ﻿<Page
+    x:Name="Page"
     x:Class="WPStarter.UWP.Views.Categories"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,13 +7,17 @@
     xmlns:conv="using:WPStarter.UWP.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:WordPressAPI.Models"
+    xmlns:models1="using:WPStarter.UWP.Models"
+    xmlns:controls="using:WPStarter.UWP.Controls"
     mc:Ignorable="d">
     <Page.Resources>
         <conv:StringFormatConverter x:Key="convString"/>
         <conv:EnumDisplayConverter x:Key="convEnum"/>
+        <conv:CategoryOpacityConverter x:Key="convOpacity"/>
     </Page.Resources>
-    <Grid Background="White">
-        <Grid x:Name="grdPosts" Margin="20">
+    <Grid>
+        <Grid x:Name="grdPosts" Margin="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -31,18 +36,13 @@
             </StackPanel>
 
             <GridView x:Name="gvPosts" 
-                        Grid.Row="1" Margin="20 10 0 10"
+                        Grid.Row="1" Margin="20 10 0 0"
                         ItemsSource="{x:Bind ViewModel.SortedCategories, Mode=OneWay}"
                        SelectionMode="None"
                       IsItemClickEnabled="True" ItemClick="gvPosts_ItemClick">
                 <GridView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Width="200">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Style="{StaticResource CategoryCount}" Text="{Binding Count, Converter={StaticResource convString}, ConverterParameter='({0})'}"/>
-                            </StackPanel>
-                        </Grid>
+                    <DataTemplate x:DataType="models1:Category">
+                        <controls:CategoryTile DataContext="{x:Bind}"/>
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
